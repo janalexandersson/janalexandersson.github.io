@@ -12,7 +12,7 @@
 
 
 
-<title>Title</title>
+<title>Jan Alexandersson</title>
 
 <script src="site_libs/jquery-1.11.3/jquery.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -43,8 +43,15 @@ if (window.hljs) {
 
 
 <style type="text/css">
+p {
+  font-size: 20px;
+  color: #515151;
+  font-family:calendas-plus
+}
+
 h1 {
   font-size: 34px;
+  color: #303030;
 }
 h1.title {
   font-size: 38px;
@@ -245,6 +252,25 @@ $(document).ready(function () {
 }
 </style>
 
+<style type="text/css">
+.block {
+  display: block;
+  width: 100%;
+  border: none;
+  background-color: #cccccc;
+  color: white;
+  padding: 14px 28px;
+  font-size: 16px;
+  cursor: pointer;
+  text-align: center;
+}
+
+.block:hover {
+  background-color: #ddd;
+  color: black;
+}
+</style>
+
 <!-- code folding -->
 
 
@@ -276,16 +302,16 @@ $(document).ready(function () {
   <a href="index.html">Home</a>
 </li>
 <li>
-  <a href="placeholder.html">Placeholder</a>
+  <a href="placeholder.html">About</a>
 </li>
 <li>
-  <a href="placeholder.html">Placeholder</a>
-</li>
-<li>
-  <a href="placeholder.html">Placeholder</a>
-</li>
-<li>
-  <a href="placeholder.html">Placeholder</a>
+  <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
+          Choose a Tab <span class="caret"></span>
+  </a>
+  <ul class="dropdown-menu">
+          <li class=""><a href="#first-tab" data-toggle="tab" aria-expanded="false" aria-controls="first-tab">First Tab</a></li>
+          <li class=""><a href="#second-tab" data-toggle="tab" aria-expanded="false" aria-controls="second-tab">Second Tab</a></li>
+  </ul>
 </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
@@ -297,19 +323,35 @@ $(document).ready(function () {
 
 <div class="fluid-row" id="header">
 
+<a style="color:black;" href="placeholder.html"><h1>Some Title</h1></a>
 
+<p>
+  In this thesis we study three rumor spreading models, the Daley–Kendall model
+[DK65], Maki–Thompson model [Mak73] and Daley–Kendall model with memory.
+The main area of use for rumor spreading models is naturally to describe how
+a rumor is spread in a population but can be used in other areas as well, for
+example the spread of viruses on the Internet. Rumor spreading is closely related
+to epidemics as the rumor can be seen as an infection. <a href= "placeholder.html">Read more...</a>
+</p>
 
-<h1 class="title toc-ignore">Some Title</h1>
+<a style="color:black;" href="placeholder.html"><h1>Some Title</h1></a>
+
+<p>
+  In this thesis we study three rumor spreading models, the Daley–Kendall model
+[DK65], Maki–Thompson model [Mak73] and Daley–Kendall model with memory.
+The main area of use for rumor spreading models is naturally to describe how
+a rumor is spread in a population but can be used in other areas as well, for
+example the spread of viruses on the Internet. Rumor spreading is closely related
+to epidemics as the rumor can be seen as an infection. <a href= "placeholder.html">Read more...</a>
+</p>
 
 </div>
 
-
-<p>Description</p>
-<div id="moodle-page" class="section level3">
-<h3>Test</h3>
+<div id="block-button" class="section level3">
 <p>
 </div>
 
+<button class="block" href= "placeholder.html">See full list of topics</button>
 
 
 
@@ -354,6 +396,7 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
+
 
 </body>
 </html>
