@@ -1,0 +1,14 @@
+---
+title: "post1_test"
+author: "Jan Alexandersso"
+date: "September 24, 2020"
+output: 
+  html_document:
+    template: ../header.html
+    self_contained: FALSE
+    # before_body: before.html
+    # after_body: after.html
+---
+
+
+Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
