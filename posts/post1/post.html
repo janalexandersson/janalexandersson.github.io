@@ -11,9 +11,9 @@
 
 
 
-<!--
-<title></title>
--->
+
+<title>Jan Alexandersson</title>
+
 
 
 <script src="../../site_libs/jquery-1.11.3/jquery.min.js"></script>
@@ -116,9 +116,31 @@ img {
 button.code-folding-btn:focus {
   outline: none;
 }
-summary {
-  display: list-item;
+
+
+details {
+    border: 1px solid #aaa;
+    border-radius: 4px;
+    padding: .5em .5em 0;
 }
+
+summary {
+    display: list-item;
+    font-size: 18px;
+    font-weight: bold;
+    margin: -.5em -.5em 0;
+    padding: .5em;
+}
+
+details[open] {
+    padding: .5em;
+}
+
+details[open] summary {
+    border-bottom: 1px solid #aaa;
+    margin-bottom: .5em;
+}
+
 </style>
 
 
@@ -264,6 +286,7 @@ $(document).ready(function () {
 .tabset-dropdown > .nav-tabs > li {
   display: none;
 }
+
 </style>
 
 <!-- code folding -->
@@ -301,6 +324,7 @@ $(document).ready(function () {
 <li>
   <a href="../../about.html">About</a>
 </li>
+<!--
 <li>
   <a class="dropdown-toggle" data-toggle="dropdown" href="#" aria-expanded="false">
           Choose a Tab <span class="caret"></span>
@@ -310,6 +334,7 @@ $(document).ready(function () {
           <li class=""><a href="#second-tab" data-toggle="tab" aria-expanded="false" aria-controls="second-tab">Second Tab</a></li>
   </ul>
 </li>
+-->
       </ul>
       <ul class="nav navbar-nav navbar-right">
         
@@ -330,9 +355,67 @@ $(document).ready(function () {
 
 
 <p>
-  This is a test on displaying math...
+  During middle and high school I heard the words "when will we ever use this?!" at some point during almost every math class. Even though those students have a point (the majority would probably never use what was teached in that class ever again), it still bothered me. I believe that math is much more than just <i>useful</i> and that there are more reasons to learn math than the usefulness of it. Math can also be learned because of the beauty of it. I will present some completely useless but really beautiful and satisfying problems in probability, regarding the uniform distribution. 
 </p>
 
+<p>
+  The beauty of the problems which will be introduced lies in both how easily the problems are formulated and the surprising and satisfying end results. We will consider two sligthly different settings regarding draws from the uniform distribution and will be focusing on expected values.
+</p>
+
+<h3>Setting 1: Increasing sequence of uniform draws</h3>
+
+<p>
+  Draw from the uniform distribution and record the value. Keep doing this until you obtain a value which is lower than the previous value. 
+  <br> 
+  <b>Question 1: </b> What is the expected length of the increasing sequence which is obtained?
+  Now let's formulate this more mathematically. Let $X_1, X_2,...$ be independent identically $U(0,1)$ distributed random variables. Furthermore, let $N = \max \{ n \in \mathbb{N} \ : X_1 &lt; ... &lt; X_n \}$ be the number of increasing elements at the start of the sequence. What is the expected value of $N$? 
+  <br>
+  <b>Question 2: </b> What is the expected value of $X_N$?
+</p> 
+
+
+<h3>Setting 2: Uniform drawn until sum exceeding $1$</h3>
+
+<p>
+  Draw from the uniform distribution and record the value. Keep doing this until the sum of you draw exceed $1$. 
+  <br> 
+  <b>Question 3: </b> What is the expected length of the sequence until the sum exceeds $1$?
+  Again, more mathematically. Now let $S_n = \displaystyle\sum_{i=1}^{n} X_i$ and $M = \min \{ m \in \mathbb{N} \ : S_n &gt; 1 \}$. What is the expected value of $M$? 
+  <br>
+  <b>Question 4: </b> What is the expected value of $X_N$?
+</p> 
+
+<br>
+<br>
+
+
+<p>
+  If you can not wait to see the solutions to these problems, the answers can be found here: 
+</p>
+
+<details>
+    <summary>Question 1:</summary>
+    <p>$e-1$</p>
+</details>
+
+<details>
+    <summary>Question 2:</summary>
+    <p>$e-2$</p>
+</details>
+
+<details>
+    <summary>Question 3:</summary>
+    <p>$e$</p>
+</details>
+
+<details>
+    <summary>Question 4:</summary>
+    <p>$2-\frac{e}{2}$</p>
+</details>
+
+
+
+<!--
 <p>
 When $a \ne 0$, there are two solutions to \(ax^2 + bx + c = 0\) and they are
 $$x = {-b \pm \sqrt{b^2-4ac} \over 2a}.$$
@@ -353,6 +436,7 @@ S(x_{S};y_{S}) & \,\textrm{or}\,
 
 This is a sum: $\displaystyle\sum_{i=1}^{\infty} f(x_i)$.
 </p>
+-->
 
 </div>
 
@@ -395,6 +479,8 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
+
+
 
 </body>
 </html>
