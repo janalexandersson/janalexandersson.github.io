@@ -282,6 +282,41 @@ $(document).ready(function () {
   color: black;
 }
 
+img.profile-pic {
+  max-width:100%;
+  max-height:100%;
+  padding-top: 10px;
+  padding-bottom: 20px;
+}
+
+.profile-div {
+  margin-left: 10px;
+  float:right; 
+  width: 30%; 
+  background-color: #afeeee; 
+  text-align: center;
+}
+
+@media screen and (max-width: 900px) {
+    .profile-div{
+      display: inline-block;
+      width: 40%;
+    }
+}
+
+@media screen and (max-width: 750px) {
+    .profile-div{
+      display: inline-block;
+      width: 45%;
+    }
+}
+
+@media screen and (max-width: 500px) {
+    .profile-div{
+      display: inline-block;
+      width: 48%;
+    }
+}
 </style>
 
 <!-- code folding -->
@@ -292,7 +327,6 @@ $(document).ready(function () {
 </head>
 
 <body>
-
 
 <div class="container-fluid main-container">
 
@@ -310,7 +344,7 @@ $(document).ready(function () {
       <a class="navbar-brand" href="index.html">Jan Alexandersson</a>
     </div>
     <div id="navbar" class="navbar-collapse collapse">
-      <ul class="nav navbar-nav navbar-left">
+      <ul class="nav navbar-nav">
         <li>
   <a href="index.html">Home</a>
 </li>
@@ -340,36 +374,21 @@ $(document).ready(function () {
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
-<br>
-<div>
-<img src="images/header2.JPEG" alt="MISSING JPG" style="float:center">
-</div>
-
-<a style="color:black;" href="posts/post1/post.html"><h1>Surprising and satisfying results on draws from the uniform distribution</h1></a>
-
-
-<p style = "font-size: 16px; color: gray">2020-09-24</p>
-
-<p>
-  During middle and high school I heard the words "when will we ever use this?!" at some point during almost every math class. Even though those students have a point (the majority would probably never use what was teached in that class ever again), it still bothered me. I believe that math is much more than just <i>useful</i> and that there are more reasons to learn math than the usefulness of it. Math can also be learned because of the beauty of it. I will present some completely useless but really beautiful and satisfying problems in probability, regarding the uniform distribution.   <a href= "posts/post1/post.html">Read more...</a>
-</p>
-
-<p>
   
+<h1>TITLE</h1>
+
+<br>
+
+
+<p>
+JAVASCRIPT GOES HERE
 </p>
 
+<br>
+<br>
+<br>
+<br>
 
-</div>
-
-<div id="block-button" class="section level3">
-<p>
-</div>
-
-<button class="block" onclick="location.href='list.html'">See full list of posts</button>
-
-
-
-</div>
 
 <script>
 
@@ -410,7 +429,6 @@ $(document).ready(function () {
     document.getElementsByTagName("head")[0].appendChild(script);
   })();
 </script>
-
 
 </body>
 </html>

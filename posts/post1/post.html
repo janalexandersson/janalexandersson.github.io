@@ -50,7 +50,11 @@ p {
   color: #515151;
   font-family:calendas-plus
 }
-
+.math{
+    font-size: 20px;
+    text-align: center;
+    padding: 10px;
+}
 @media screen and (min-width: 750px) {
     p{
       text-align: justify;
@@ -380,9 +384,9 @@ $(document).ready(function () {
   Draw from the uniform distribution and record the value. Keep doing this until the sum of you draw exceed $1$. 
   <br> 
   <b>Question 3: </b> What is the expected length of the sequence until the sum exceeds $1$?
-  Again, more mathematically. Now let $S_n = \displaystyle\sum_{i=1}^{n} X_i$ and $M = \min \{ m \in \mathbb{N} \ : S_n &gt; 1 \}$. What is the expected value of $M$? 
+  Again, more mathematically. Now let $S_m = \displaystyle\sum_{i=1}^{m} X_i$ and $M = \min \{ m \in \mathbb{N} \ : S_n &gt; 1 \}$. What is the expected value of $M$? 
   <br>
-  <b>Question 4: </b> What is the expected value of $X_N$?
+  <b>Question 4: </b> What is the expected value of $X_M$?
 </p> 
 
 <br>
@@ -412,6 +416,37 @@ $(document).ready(function () {
     <summary>Question 4:</summary>
     <p>$2-\frac{e}{2}$</p>
 </details>
+
+
+<h3>Setting 1 Solution</h3>
+
+<p>
+Since any order (by size) of the $X_i$'s are equally likely, we have 
+</p>
+
+<p class = "math">
+  $P(N &ge; n) = P(X_1 &lt; X_2 &lt; ... &lt; X_n) = \frac{1}{n!}$.
+</p>
+
+<p>We can now directly compute $E[N]$ by </p>
+
+<p class = "math">
+  $E[N] = \displaystyle\sum_{i=1}^{\infty} P(N &lt; n) = \displaystyle\sum_{i=1}^{\infty} \frac{1}{n!} = e-1$,
+</p>
+
+<p>
+where we used a <a href = "https://math.stackexchange.com/a/958498">property when computing the expected value of non-negative random variables</a>. 
+Also notice ...
+</p>
+
+<p>
+We can also from $P(N &ge; n)$ derive the probability mass function for $N$ as
+</p>
+
+<p class = "math">
+  $p_N(n) = P(N=n) = P(N &ge; n) - P(N &ge; n+1) = \frac{1}{n!}-\frac{1}{(n+1)!} = \frac{n}{(n+1)!}$.
+</p>
+
 
 <br>
 <br>
