@@ -23,7 +23,9 @@
 <script src="site_libs/navigation-1.1/tabsets.js"></script>
 <link href="site_libs/highlightjs-9.12.0/default.css" rel="stylesheet" />
 <script src="site_libs/highlightjs-9.12.0/highlight.js"></script>
-
+<script src="https://cdn.plot.ly/plotly-2.0.0.min.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
+ 
 <style type="text/css">code{white-space: pre;}</style>
 <style type="text/css">
   pre:not([class]) {
@@ -54,6 +56,20 @@ p {
       text-align: justify;
       font-size: 20px;
     }
+}
+
+#user-inputs>div {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 0.75rem;
+}
+
+#user-inputs label {
+  margin-bottom: 0.25rem;
+}
+
+#user-inputs input {
+  width: 15rem;
 }
 
 h1 {
@@ -281,6 +297,23 @@ $(document).ready(function () {
   background-color: #ddd;
   color: black;
 }
+.folders{
+  height: 150px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-content: space-around;
+  text-align: center;
+  background-color: #efefef;
+}
+
+.folder {
+  flex-basis: 30%;
+  flex-shrink: 0;
+  padding: 10px 0;
+  background-color: #1abc9c;
+}
 
 img.profile-pic {
   max-width:100%;
@@ -316,6 +349,29 @@ img.profile-pic {
       display: inline-block;
       width: 48%;
     }
+}
+
+input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-sizing: border-box;
+  width: 60%; 
+  display: block; 
+  margin : 0 auto;
+  background-color: #eae4ff;
+}
+
+td, th {
+  padding: 0.5rem;
+}
+
+.center {
+  margin-left: auto;
+  margin-right: auto;
 }
 </style>
 
@@ -374,48 +430,265 @@ img.profile-pic {
 </div><!--/.navbar -->
 
 <div class="fluid-row" id="header">
-  
-<h1>TITLE</h1>
 
-<br>
+<!--
+<h1>It's not about timing the market, it's about time in the market</h1>
+
+<h1>Historical developement of the market</h1>
+
+<h1>Why saving monthly is a good idea</h1>
+
+<h1>Starting early is key</h1>
+
+<h1>Starting early is key</h1>
+-->
+
+<script src="https://cdn.plot.ly/plotly-2.0.0.min.js"></script>
+
+<h1>Investing Calculator</h1>
+<div id="user-inputs">
+<table class="center">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center">
+        <font color="#808080" size="4px"> John </font>
+      </th>
+      <th class="text-center">
+        <font color="#808080" size="4px"> Lucy </font>
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>
+        <font color="#808080" size="3px"> Initial Investment: </font>
+      <td> <input type="text" value="10000" id="initial-investment_1" style="width: 60%; display: block; margin : 0 auto;"></td>
+      <td><input type="text" value="50000" id="initial-investment_2" style="width: 60%; display: block; margin : 0 auto;"></td>
+    </tr>
+    <tr>
+      <th>
+        <font color="#808080" size="3px"> Monthly Contribution: </font>
+      <td> <input type="text" value="3000" id="monthly-contribution_1" style="width: 60%; display: block; margin : 0 auto;"></td>
+      <td><input type="text" value="2300" id="monthly-contribution_2" style="width: 60%; display: block; margin : 0 auto;"></td>
+    </tr>
+    <tr>
+      <th>
+        <font color="#808080" size="3px"> Number of Years: </font>
+      <td> <input type="text" value="30" id="year-count_1" style="width: 60%; display: block; margin : 0 auto;"></td>
+      <td><input type="text" value="25" id="year-count_2" style="width: 60%; display: block; margin : 0 auto;"></td>
+    </tr>
+    <tr>
+      <th>
+        <font color="#808080" size="3px"> Annual Interest Rate (%): </font>
+      </th>
+      <td colspan="2"><input style="width: 80%; display: block; margin : 0 auto;" type="text" value="4" id="annual-interest-rate"></td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 
-<p>
-JAVASCRIPT GOES HERE
-</p>
+  <div id='invest' style = "clear:both;
+  left: 0px;
+  right: 0px;
+  top: 0px;"></div>
 
-<br>
-<br>
-<br>
-<br>
-
-
-<script>
-
-// add bootstrap table styles to pandoc tables
-function bootstrapStylePandocTables() {
-  $('tr.header').parent('thead').parent('table').addClass('table table-condensed');
-}
-$(document).ready(function () {
-  bootstrapStylePandocTables();
-});
+  <script>
+    function formatMoney(value) {
+      return value.toFixed(0).toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    }
 
 
-</script>
+    const inputBoxes = Array.from(document.getElementsByTagName("input"));
+    var annualInterestRateInput = document.getElementById("annual-interest-rate");
+    var initialInvestmentInput_1 = document.getElementById("initial-investment_1");
+    var monthlyContributionInput_1 = document.getElementById("monthly-contribution_1");
+    var numberOfYearsInput_1 = document.getElementById("year-count_1");
+    var initialInvestmentInput_2 = document.getElementById("initial-investment_2");
+    var monthlyContributionInput_2 = document.getElementById("monthly-contribution_2");
+    var numberOfYearsInput_2 = document.getElementById("year-count_2");
+    var updatePlot = function(event) {
+      var rowcount_1 = Number(numberOfYearsInput_1.value);
+      var yearDifference = 5;
+      var initialInvestment_1 = Number(initialInvestmentInput_1.value);
+      var monthlyContribution_1 = Number(monthlyContributionInput_1.value);
+      var rowcount_2 = Number(numberOfYearsInput_2.value);
+      var initialInvestment_2 = Number(initialInvestmentInput_2.value);
+      var monthlyContribution_2 = Number(monthlyContributionInput_2.value);
+      var annualInterestRate = Number(annualInterestRateInput.value) / 100.0;
+      var interestFactor = 1 + annualInterestRate / 12.0;
 
-<!-- tabsets -->
 
-<script>
-$(document).ready(function () {
-  window.buildTabsets("TOC");
-});
+      function computeTotal(rowcount, initialInvestment, monthlyContribution, interestFactor) {
+      	var balance = [];
+        var x = [];
+        var totalDeposit = [];
+        var monthCount = 0;
+        var yearReturn = [];
+      	for (var row = 1; row <= rowcount; row += 1) {
+          x[row - 1] = row;
+          monthCount = 12 * row;
+          totalDeposit[row - 1] = initialInvestment + 12.0 * monthlyContribution * row;
+          balance[row - 1] = initialInvestment * Math.pow(interestFactor, monthCount + 1) + monthlyContribution * (
+            (Math.pow(interestFactor, monthCount + 1) - 1) /
+            (interestFactor - 1) - 1);
+          yearReturn[row - 1] = balance[row - 1] - totalDeposit[row - 1];
+        }
+        return [x, yearReturn, totalDeposit];
+      }
+      
+      
+			var values_1 = computeTotal(rowcount_1, initialInvestment_1, monthlyContribution_1, interestFactor);
+      var x_1 = values_1[0];
+      var yearReturn_1 = values_1[1];
+      var totalDeposit_1 = values_1[2];
+			
+      var values_2 = computeTotal(rowcount_2, initialInvestment_2, monthlyContribution_2, interestFactor);
+      var x_2 = values_2[0];
+      var yearReturn_2 = values_2[1];
+      var totalDeposit_2 = values_2[2];
+			
+      var yearDifference = Math.abs(totalDeposit_1.length - totalDeposit_2.length);
+      var x = Math.max(x_1, x_2);
+      
+      var zeros = [];
+      for (var i = 0; i < yearDifference; i++) zeros[i] = 0;
+			
+      if (totalDeposit_1.length < totalDeposit_2.length) {
+      		var totalDeposit_1 = zeros.concat(totalDeposit_1)
+     			var yearReturn_1 = zeros.concat(yearReturn_1)
+      }
+      else if (totalDeposit_1.length > totalDeposit_2.length) {
+   		   	var totalDeposit_2 = zeros.concat(totalDeposit_2)
+  	   		var yearReturn_2 = zeros.concat(yearReturn_2)
+      }
 
-$(document).ready(function () {
-  $('.tabset-dropdown > .nav-tabs > li').click(function () {
-    $(this).parent().toggleClass('nav-tabs-open')
-  });
-});
-</script>
+
+
+      var text = [];
+      var balanceDifference = [];
+      for (var i = 0; i < totalDeposit_1.length; i += 1) {
+        balanceDifference[i] = totalDeposit_1[i] + yearReturn_1[i] - totalDeposit_2[i] - yearReturn_2[i];
+        text[i] = `Total Deposit John: ${formatMoney(totalDeposit_1[i])}<br>Total Return John: ${formatMoney(yearReturn_1[i])}<br>Total Deposit Lucy: ${formatMoney(totalDeposit_2[i])}<br>Total Return Lucy: ${formatMoney(yearReturn_2[i])}<br><br>Difference in Balance: ${formatMoney(balanceDifference[i])}`;
+      }
+
+
+      var trace1 = {
+        x: x,
+        y: totalDeposit_1,
+        hovertext: text,
+        hoverinfo: 'text',
+        name: 'Total Deposit John',
+        type: 'bar',
+        offset: 0,
+        width: 0.4,
+        marker: {
+          color: 'rgb(173, 216, 230)',
+          line: {
+            color: 'rgb(173, 216, 230)',
+            width: 0.1
+          }
+        }
+      };
+
+      var trace2 = {
+        x: x,
+        y: yearReturn_1,
+        hovertext: text,
+        hoverinfo: 'text',
+        name: 'Total Return John',
+        type: 'bar',
+        hoverinfo: "text",
+        offset: 0,
+        width: 0.4,
+        marker: {
+          color: 'rgb(230, 187, 173)',
+          line: {
+            color: 'rgb(100, 50, 6)',
+            width: 0.2
+          }
+        }
+      };
+
+
+      var trace3 = {
+        x: x,
+        y: totalDeposit_2,
+        hovertext: text,
+        hoverinfo: 'text',
+        name: 'Total Deposit Lucy',
+        type: 'bar',
+        hoverinfo: "text",
+        base: 0,
+        offset: -0.4,
+        width: 0.4,
+        marker: {
+          color: 'rgb(216, 230, 173)',
+          line: {
+            color: 'rgb(216, 230, 200)',
+            width: 0.1
+          }
+        }
+      };
+
+
+      var trace4 = {
+        x: x,
+        y: yearReturn_2,
+        hovertext: text,
+        hoverinfo: 'text',
+        name: 'Total Return Lucy',
+        type: 'bar',
+        hoverinfo: "text",
+        base: totalDeposit_2,
+        width: 0.4,
+        offset: -0.4,
+        marker: {
+          color: 'rgb(187, 173, 230)',
+          line: {
+            color: 'rgb(100, 50, 6)',
+            width: 0.2
+          }
+        }
+      };
+
+
+      var data = [trace1, trace2, trace3, trace4];
+
+      var layout = {
+        title: 'Total Savings',
+        barmode: 'stack',
+        showlegend: true,
+        displayModeBar: false,
+        hoverlabel: {
+          bgcolor: 'rgb(173, 216, 230)',
+          font: {
+            color: 'black'
+          }
+        },
+        xaxis: {
+          zeroline: false,
+          title: 'Year'
+        },
+        yaxis: {
+          zeroline: false,
+          hoverformat: '.3r',
+          title: 'Balance'
+        }
+      };
+
+      Plotly.newPlot('invest', data, layout, {
+        displayModeBar: false
+      });
+    };
+
+
+    window.onload = updatePlot
+    inputBoxes.forEach(input => input.oninput = updatePlot)
+
+  </script>
+
 
 <!-- code folding -->
 
